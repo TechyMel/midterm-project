@@ -1,5 +1,6 @@
 import datetime
 from pathlib import Path
+from colorama import Fore
 import pandas as pd
 import pytest
 from unittest.mock import Mock, patch, PropertyMock
@@ -165,7 +166,7 @@ def test_calculator_repl_exit(mock_print, mock_input):
         calculator_repl()
         mock_save_history.assert_called_once()
         mock_print.assert_any_call("History saved successfully.")
-        mock_print.assert_any_call("Goodbye!")
+        mock_print.assert_any_call(Fore.YELLOW + "Goodbye!")
 
 @patch('builtins.input', side_effect=['help', 'exit'])
 @patch('builtins.print')
@@ -177,7 +178,7 @@ def test_calculator_repl_help(mock_print, mock_input):
 @patch('builtins.print')
 def test_calculator_repl_addition(mock_print, mock_input):
     calculator_repl()
-    mock_print.assert_any_call("\nResult: 5")
+    mock_print.assert_any_call(Fore.GREEN + "\nResult: 5")
 
 @patch('builtins.input', side_effect=['history', 'exit'])
 @patch('builtins.print')

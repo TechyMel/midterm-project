@@ -248,7 +248,64 @@ class Root(Operation):
         self.validate_operands(a, b)
         return Decimal(pow(float(a), 1 / float(b)))
 
+class Modulus(Operation):
+    """
+    Modulus operation implementation.
 
+    Returns the remainder after dividing one number by another.
+    """
+
+    def validate_operands(self, a: Decimal, b: Decimal) -> None:
+        super().validate_operands(a, b)
+        if b == 0:
+            raise ValidationError("Cannot perform modulus by zero")
+
+    def execute(self, a: Decimal, b: Decimal) -> Decimal:
+        self.validate_operands(a, b)
+        return a % b
+class IntegerDivision(Operation):
+    """
+    Integer division operation implementation.
+
+    Divides two numbers and returns only the whole number portion.
+    """
+
+    def validate_operands(self, a: Decimal, b: Decimal) -> None:
+        super().validate_operands(a, b)
+        if b == 0:
+            raise ValidationError("Cannot divide by zero")
+
+    def execute(self, a: Decimal, b: Decimal) -> Decimal:
+        self.validate_operands(a, b)
+        return a // b
+    
+class Percentage(Operation):
+    """
+    Percentage operation implementation.
+
+    Calculates what percentage the first number is of the second number.
+    """
+
+    def validate_operands(self, a: Decimal, b: Decimal) -> None:
+        super().validate_operands(a, b)
+        if b == 0:
+            raise ValidationError("Cannot calculate percentage with zero")
+
+    def execute(self, a: Decimal, b: Decimal) -> Decimal:
+        self.validate_operands(a, b)
+        return (a / b) * Decimal("100")
+    
+class AbsoluteDifference(Operation):
+    """
+    Absolute difference operation implementation.
+
+    Returns the positive difference between two numbers.
+    """
+
+    def execute(self, a: Decimal, b: Decimal) -> Decimal:
+        self.validate_operands(a, b)
+        return abs(a - b)
+    
 class OperationFactory:
     """
     Factory class for creating operation instances.
@@ -265,7 +322,11 @@ class OperationFactory:
         'multiply': Multiplication,
         'divide': Division,
         'power': Power,
-        'root': Root
+        'root': Root,
+        'modulus': Modulus,
+        'intdiv': IntegerDivision,
+        'percentage': Percentage,
+        'absdiff': AbsoluteDifference
     }
 
     @classmethod

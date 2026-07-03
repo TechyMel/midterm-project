@@ -11,7 +11,12 @@ from app.operations import (
     Division,
     Power,
     Root,
+    Modulus,
+    IntegerDivision,
+    Percentage,
+    AbsoluteDifference,
     OperationFactory,
+    
 )
 
 
@@ -181,6 +186,72 @@ class TestRoot(BaseOperationTest):
         },
     }
 
+class TestModulus(BaseOperationTest):
+    """Test Modulus operation."""
+
+    operation_class = Modulus
+
+    valid_test_cases = {
+        "basic_modulus": {"a": "10", "b": "3", "expected": "1"},
+        "even_division": {"a": "8", "b": "2", "expected": "0"},
+    }
+
+    invalid_test_cases = {
+        "divide_by_zero": {
+            "a": "5",
+            "b": "0",
+            "error": ValidationError,
+            "message": "Cannot perform modulus by zero"
+        },
+    }
+class TestIntegerDivision(BaseOperationTest):
+    """Test Integer Division operation."""
+
+    operation_class = IntegerDivision
+
+    valid_test_cases = {
+        "basic": {"a": "10", "b": "3", "expected": "3"},
+        "whole_number": {"a": "8", "b": "2", "expected": "4"},
+    }
+
+    invalid_test_cases = {
+        "divide_by_zero": {
+            "a": "8",
+            "b": "0",
+            "error": ValidationError,
+            "message": "Cannot divide by zero"
+        },
+    }
+class TestPercentage(BaseOperationTest):
+    """Test Percentage operation."""
+
+    operation_class = Percentage
+
+    valid_test_cases = {
+        "half": {"a": "50", "b": "100", "expected": "50"},
+        "quarter": {"a": "25", "b": "100", "expected": "25"},
+    }
+
+    invalid_test_cases = {
+        "zero_total": {
+            "a": "25",
+            "b": "0",
+            "error": ValidationError,
+            "message": "Cannot calculate percentage with zero"
+        },
+    }
+class TestAbsoluteDifference(BaseOperationTest):
+    """Test Absolute Difference operation."""
+
+    operation_class = AbsoluteDifference
+
+    valid_test_cases = {
+        "positive": {"a": "10", "b": "3", "expected": "7"},
+        "reverse": {"a": "3", "b": "10", "expected": "7"},
+        "equal": {"a": "5", "b": "5", "expected": "0"},
+    }
+
+    invalid_test_cases = {}
 
 class TestOperationFactory:
     """Test OperationFactory functionality."""
@@ -194,6 +265,10 @@ class TestOperationFactory:
             'divide': Division,
             'power': Power,
             'root': Root,
+            'modulus': Modulus,
+            'intdiv': IntegerDivision,
+            'percentage': Percentage,
+            'absdiff': AbsoluteDifference
         }
 
         for op_name, op_class in operation_map.items():
