@@ -57,16 +57,32 @@ pip list
 
 # 🔧 3. Configuration Setup
 
-Create a file named `.env` in the project root.
+This project uses **python-dotenv** to load optional configuration settings from a `.env` file.
+
+Create a `.env` file in the project root or copy the provided `.env.example` file.
 
 Example:
 
-```env
-AUTO_SAVE=True
-LOG_LEVEL=INFO
+```bash
+cp .env.example .env
 ```
 
-The application uses these settings to configure automatic history saving and application logging.
+The application supports the following environment variables:
+
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `CALCULATOR_BASE_DIR` | Base project directory | Project Root |
+| `CALCULATOR_LOG_DIR` | Directory for log files | `logs/` |
+| `CALCULATOR_HISTORY_DIR` | Directory for history files | `history/` |
+| `CALCULATOR_HISTORY_FILE` | CSV history file | `history/calculator_history.csv` |
+| `CALCULATOR_LOG_FILE` | Log file location | `logs/calculator.log` |
+| `CALCULATOR_MAX_HISTORY_SIZE` | Maximum history entries | `1000` |
+| `CALCULATOR_AUTO_SAVE` | Automatically save history | `true` |
+| `CALCULATOR_PRECISION` | Decimal precision | `10` |
+| `CALCULATOR_MAX_INPUT_VALUE` | Maximum input value | `1e999` |
+| `CALCULATOR_DEFAULT_ENCODING` | File encoding | `utf-8` |
+
+If no `.env` file is provided, the application automatically uses these default values.
 
 ---
 
