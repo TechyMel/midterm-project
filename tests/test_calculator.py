@@ -156,6 +156,24 @@ def test_clear_history(calculator):
     assert calculator.history == []
     assert calculator.undo_stack == []
     assert calculator.redo_stack == []
+    
+def test_get_history_dataframe_empty(calculator):
+    df = calculator.get_history_dataframe()
+    assert df.empty
+
+def test_show_history_empty(calculator):
+    assert calculator.show_history() == []
+
+def test_undo_when_empty(calculator):
+    assert calculator.undo() is False
+    
+def test_redo_when_empty(calculator):
+    assert calculator.redo() is False
+    
+def test_save_empty_history(calculator):
+    calculator.history.clear()
+    calculator.save_history()
+    assert calculator.config.history_file.exists()
 
 # Test REPL Commands (using patches for input/output handling)
 
@@ -220,4 +238,4 @@ def test_calculator_repl_load(mock_print, mock_input):
 @patch('builtins.print')
 def test_calculator_repl_invalid_command(mock_print, mock_input):
     calculator_repl()
-    mock_print.assert_any_call("Unknown command: 'banana'. Type 'help' for available commands.")
+    mock_print.assert_any_call(Fore.YELLOW + "Unknown command: 'banana'. Type 'help' for available commands.")

@@ -130,3 +130,22 @@ def test_from_dict_result_mismatch(caplog):
 
     # Assert
     assert "Loaded calculation result 10 differs from computed result 5" in caplog.text
+def test_calculation_not_equal_to_other_type():
+    calc = Calculation(
+        operation="Addition",
+        operand1=Decimal("2"),
+        operand2=Decimal("3")
+    )
+
+    # Covers the NotImplemented branch in __eq__
+    assert calc.__eq__("not a calculation") is NotImplemented
+
+
+def test_format_result_integer():
+    calc = Calculation(
+        operation="Addition",
+        operand1=Decimal("2"),
+        operand2=Decimal("3")
+    )
+
+    assert calc.format_result() == "5"
