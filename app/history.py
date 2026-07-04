@@ -3,7 +3,8 @@
 ########################
 
 from abc import ABC, abstractmethod
-import logging
+from venv import logger
+from app.logger import logging
 from typing import Any
 from app.calculation import Calculation
 
@@ -48,7 +49,7 @@ class LoggingObserver(HistoryObserver):
         """
         if calculation is None:
             raise AttributeError("Calculation cannot be None")
-        logging.info(
+        logger.info(
             f"Calculation performed: {calculation.operation} "
             f"({calculation.operand1}, {calculation.operand2}) = "
             f"{calculation.result}"
@@ -93,4 +94,4 @@ class AutoSaveObserver(HistoryObserver):
             raise AttributeError("Calculation cannot be None")
         if self.calculator.config.auto_save:
             self.calculator.save_history()
-            logging.info("History auto-saved")
+            logger.info("History auto-saved")

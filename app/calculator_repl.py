@@ -3,7 +3,7 @@
 ########################
 
 from decimal import Decimal
-import logging
+from app.logger import logger
 from colorama import Fore, Style, init
 
 from app.calculator import Calculator
@@ -160,5 +160,5 @@ def calculator_repl():
     except Exception as e:
         # Handle fatal errors during initialization
         print(Fore.RED + f"Fatal error: {e}")
-        logging.error(f"Fatal error in calculator REPL: {e}")
+        logger.error(f"Fatal error in calculator REPL: {e}")
         raise
